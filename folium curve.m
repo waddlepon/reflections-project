@@ -21,4 +21,19 @@ fimplicit(px == py);
 fimplicit((x^3+y^3-(3*x*y)) == 0);
 
 %set direction vector here
-d = [5, 1];
+dw = 1;
+dz = 2;
+
+%theta is the angle down from the horizontal of the original line
+theta = atan(dx/dy);
+%a is the angle down from the horizontal of the new line
+a = atan(dw/dz);
+%b is the angle up from the x-axis of the original line
+b = atan(dy/dx);
+%c is the angle of the new line
+c = b - (theta-a);
+
+nx = tan(c)*(x-fx);
+ox = (dz/dw)*(x-fx);
+fimplicit(nx == py);
+fimplicit(ox == py);
