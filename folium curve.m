@@ -7,7 +7,7 @@ dx = diff(fx);
 dy = diff(fy);
 
 %set time of intersection here
-t = 0.5;
+t = 0;
 fx = subs(fx);
 fy = subs(fy);
 dx = subs(dx);
@@ -33,7 +33,9 @@ b = atan(dy/dx);
 %c is the angle of the new line
 c = b - (theta-a);
 
-nx = tan(c)*(x-fx);
+
 ox = (dz/dw)*(x-fx);
-fimplicit(nx == py);
-fimplicit(ox == py);
+nx = tan(c)*(x-fx);
+fimplicit(ox == py, '--b');
+fimplicit(nx == py, '--g');
+
