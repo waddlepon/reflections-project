@@ -1,41 +1,36 @@
-syms x y t;
+syms x y t; % declaration MATLAB symbols x, y, and t
 
-fx = ((3*t)/(1+t^3));
-fy = ((3*t^2)/(1+t^3));
+fx = ((3*t)/(1+t^3)); % Defines a folium as a parametric equation
+fy = ((3*t^2)/(1+t^3)); 
 
-dx = diff(fx);
-dy = diff(fy);
+dx = diff(fx); % Finds the derivative of each of the parametric sections,
+dy = diff(fy); % which finds the derivative of the function overall.
 
 %set time of intersection here
-t = 0;
-fx = subs(fx);
+t = 0.5;
+fx = subs(fx); % Replace all instances of t with a specific time.
 fy = subs(fy);
 dx = subs(dx);
 dy = subs(dy);
 
-px = (dy/dx)*(x-fx);
+px = (dy/dx)*(x-fx); % Define a point-slope equation for the line tangent @ time t.
 py = (y-fy);
 
-hold on;
+hold on; % Graph the Folium and the Tangent Line
 fimplicit(px == py);
 fimplicit((x^3+y^3-(3*x*y)) == 0);
 
 %set direction vector here
-dw = 1;
-dz = 2;
+vx = 1; % the x component of the vector
+vy = 2; % the y component of the vector
 
-%theta is the angle down from the horizontal of the original line
-theta = atan(dx/dy);
-%a is the angle down from the horizontal of the new line
-a = atan(dw/dz);
-%b is the angle up from the x-axis of the original line
-b = atan(dy/dx);
-%c is the angle of the new line
-c = b - (theta-a);
+angle_off_vertical_of_tangent = atan(dx/dy);
+angle_off_vertical_of_incident_line = atan(vx/vy);
+angle_off_horizontal_of_tangent = atan(dy/dx);
+angle_off_horizontal_of_reflection = angle_off_horizontal_of_tangent - (angle_off_vertical_of_tangent-angle_off_vertical_of_incident_line);
 
-
-ox = (dz/dw)*(x-fx);
-nx = tan(c)*(x-fx);
+ox = (vy/vx)*(x-fx);
+nx = tan(angle_off_horizontal_of_reflection)*(x-fx);
 fimplicit(ox == py, '--b');
 fimplicit(nx == py, '--g');
 
