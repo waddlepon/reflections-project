@@ -1,7 +1,9 @@
-syms t
-f = [((3*t)/(1+t^3)); ((3*t^2)/(1+t^3))];
-d = [0 0; 1 2];
-d = paraConv(d);
-
-intersect = solve(f(1) == d(1), f(2) == d(2));
-disp(intersect);
+function [i] = curve_intersect(vec)
+syms x y t
+d = paraConv(vec);
+x = d(1);
+y = d(2);
+curve = (x^3+y^3-(3*x*y)) == 0;
+subs(curve);
+i = solve(subbed_curve, t);
+end
